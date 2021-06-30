@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Bakta CLI documentation &mdash; Bakta  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Bakta API-Documentation" href="REST-API.html" />
+    <link rel="prev" title="Welcome to Bakta’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Bakta
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CLI documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bioconda">BioConda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker">Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#singularity">Singularity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pip">Pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database-download">Database download</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-and-output">Input and Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#input">Input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#annotation-workflow">Annotation Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rnas">RNAs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coding-sequences">Coding sequences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#faq">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#issues-and-feature-requests">Issues and Feature Requests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="REST-API.html">REST-API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WEBUI.html">Web-UI documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Bakta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Bakta CLI documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/BAKTA.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="tex2jax_ignore mathjax_ignore section" id="bakta-cli-documentation">
+<h1>Bakta CLI documentation<a class="headerlink" href="#bakta-cli-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Bakta can be installed via BioConda, Docker, Singularity and Pip.
+However, we encourage to use <a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/install/index.html">Conda</a> or <a class="reference external" href="https://www.docker.com/get-started">Docker</a>/<a class="reference external" href="https://sylabs.io/singularity">Singularity</a> to automatically install all required 3rd party dependencies.</p>
+<p>In all cases a mandatory <a class="reference external" href="#database-download">database</a> must be downloaded.</p>
+<div class="section" id="bioconda">
+<h3>BioConda<a class="headerlink" href="#bioconda" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge -c bioconda bakta
+</pre></div>
+</div>
+</div>
+<div class="section" id="docker">
+<h3>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo docker pull oschwengers/bakta
+$ sudo docker run oschwengers/bakta --help
+</pre></div>
+</div>
+<p>Installation instructions and get-started guides: Docker <a class="reference external" href="https://docs.docker.com">docs</a></p>
+<p>For further convenience, we provide a shell script (<code class="docutils literal notranslate"><span class="pre">bakta-docker.sh</span></code>) handling Docker related parameters (volume mounting, user IDs, etc):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ bakta-docker.sh --db &lt;db-path&gt; --output &lt;output-path&gt; &lt;input&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="singularity">
+<h3>Singularity<a class="headerlink" href="#singularity" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ singularity build bakta.sif docker://oschwengers/bakta:latest
+$ singularity run bakta.sif --help
+</pre></div>
+</div>
+<p>Installation instructions, get-started and guides: Singularity <a class="reference external" href="https://sylabs.io/docs">docs</a></p>
+</div>
+<div class="section" id="pip">
+<h3>Pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python3 -m pip install --user bakta
+</pre></div>
+</div>
+<p>Bacta requires the following 3rd party executables which must be installed &amp; executable:</p>
+<ul class="simple">
+<li><p>tRNAscan-SE (2.0.6) <a class="reference external" href="https://doi.org/10.1101/614032">https://doi.org/10.1101/614032</a> <a class="reference external" href="http://lowelab.ucsc.edu/tRNAscan-SE">http://lowelab.ucsc.edu/tRNAscan-SE</a></p></li>
+<li><p>Aragorn (1.2.38) <a class="reference external" href="http://dx.doi.org/10.1093/nar/gkh152">http://dx.doi.org/10.1093/nar/gkh152</a> <a class="reference external" href="http://130.235.244.92/ARAGORN">http://130.235.244.92/ARAGORN</a></p></li>
+<li><p>INFERNAL (1.1.2) <a class="reference external" href="https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtt509">https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtt509</a> <a class="reference external" href="http://eddylab.org/infernal">http://eddylab.org/infernal</a></p></li>
+<li><p>PILER-CR (1.06) <a class="reference external" href="https://doi.org/10.1186/1471-2105-8-18">https://doi.org/10.1186/1471-2105-8-18</a> <a class="reference external" href="http://www.drive5.com/pilercr">http://www.drive5.com/pilercr</a></p></li>
+<li><p>Prodigal (2.6.3) <a class="reference external" href="https://dx.doi.org/10.1186%2F1471-2105-11-119">https://dx.doi.org/10.1186%2F1471-2105-11-119</a> <a class="reference external" href="https://github.com/hyattpd/Prodigal">https://github.com/hyattpd/Prodigal</a></p></li>
+<li><p>Hmmer (3.3.1) <a class="reference external" href="https://doi.org/10.1093/nar/gkt263">https://doi.org/10.1093/nar/gkt263</a> <a class="reference external" href="http://hmmer.org">http://hmmer.org</a></p></li>
+<li><p>Diamond (2.0.6) <a class="reference external" href="https://doi.org/10.1038/nmeth.3176">https://doi.org/10.1038/nmeth.3176</a> <a class="reference external" href="https://github.com/bbuchfink/diamond">https://github.com/bbuchfink/diamond</a></p></li>
+<li><p>Blast+ (2.7.1) <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pubmed/2231712">https://www.ncbi.nlm.nih.gov/pubmed/2231712</a> <a class="reference external" href="https://blast.ncbi.nlm.nih.gov">https://blast.ncbi.nlm.nih.gov</a></p></li>
+<li><p>AMRFinderPlus (3.10.1) <a class="reference external" href="https://github.com/ncbi/amr">https://github.com/ncbi/amr</a></p></li>
+</ul>
+<p>On Ubuntu/Debian/Mint you can install these via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt install trnascan-se aragorn infernal pilercr prodigal hmmer diamond-aligner ncbi-blast+
+</pre></div>
+</div>
+<p>Tested with Ubuntu 20.04 - some older distributions might provide outdated versions, <em>e.g.</em> trnascan-se in Ubuntu 18.04. In these cases dependencies must be installed manually.</p>
+</div>
+<div class="section" id="database-download">
+<h3>Database download<a class="headerlink" href="#database-download" title="Permalink to this headline">¶</a></h3>
+<p>Bakta requires a mandatory database which is publicly hosted at Zenodo: <a class="reference external" href="https://doi.org/10.5281/zenodo.4247252"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.4247252.svg" /></a>
+Further information is provided in the <a class="reference external" href="#database">database</a> section below.</p>
+<p>List available DB versions:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ bakta_db list
+...
+</pre></div>
+</div>
+<p>Download the most recent compatible database version:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ bakta_db download --output &lt;output-path&gt;
+</pre></div>
+</div>
+<p>or download it manually:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ wget https://zenodo.org/record/4662588/files/db.tar.gz
+$ tar -xzf db.tar.gz
+$ rm db.tar.gz
+</pre></div>
+</div>
+<p>Update an existing database:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ bakta_db update --db &lt;existing-db-path&gt; <span class="o">[</span>--tmp-dir &lt;tmp-directory&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<p>The database path can be provided either via parameter (<code class="docutils literal notranslate"><span class="pre">--db</span></code>) or environment variable (<code class="docutils literal notranslate"><span class="pre">BAKTA_DB</span></code>):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ bakta --db &lt;db-path&gt; genome.fasta
+
+$ <span class="nb">export</span> <span class="nv">BAKTA_DB</span><span class="o">=</span>&lt;db-path&gt;
+$ bakta genome.fasta
+</pre></div>
+</div>
+<p>For system-wide setups, the database can also be copied to the Bakta base directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cp -r db/ &lt;bakta-installation-dir&gt;
+</pre></div>
+</div>
+<p>As Bakta takes advantage of AMRFinderPlus for the annotation of AMR genes, AMRFinder is required to setup its own internal databases, once via <code class="docutils literal notranslate"><span class="pre">amrfinder</span> <span class="pre">-U</span></code>.</p>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Simple:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ bakta --db &lt;db-path&gt; genome.fasta
+</pre></div>
+</div>
+<p>Expert: verbose output writing results to <em>results</em> directory with <em>ecoli123</em> file <code class="docutils literal notranslate"><span class="pre">prefix</span></code> and <em>eco634</em> <code class="docutils literal notranslate"><span class="pre">locus</span> <span class="pre">tag</span></code> using an existing prodigal training file, using additional replicon information and 8 threads:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ bakta --db &lt;db-path&gt; --verbose --output results/ --prefix ecoli123 --locus-tag eco634 --prodigal-tf eco.tf --replicons replicon.tsv --threads <span class="m">8</span> genome.fasta
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-and-output">
+<h2>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="input">
+<h3>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h3>
+<p>Bakta accepts bacterial genomes and plasmids (complete / draft assemblies) in (zipped) fasta format. For a full description of how further genome information can be provided and workflow customizations can be set, please have a look at the <a class="reference external" href="#usage">Usage</a> section.</p>
+<p>Replicon meta data table:</p>
+<p>To fine-tune the very details of each sequence in the input fasta file, Bakta accepts a replicon meta data table provided in <code class="docutils literal notranslate"><span class="pre">csv</span></code>/<code class="docutils literal notranslate"><span class="pre">tsv</span></code> file format: <code class="docutils literal notranslate"><span class="pre">--replicons</span> <span class="pre">&lt;file.tsv&gt;</span></code>. Thus, complete replicons within partially completed draft assemblies can be marked &amp; handled as such, <em>e.g.</em> detection &amp; annotation of features spanning sequence edges.</p>
+<p>Table format:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>original sequence id</p></th>
+<th class="head"><p>new sequence id</p></th>
+<th class="head"><p>type</p></th>
+<th class="head"><p>topology</p></th>
+<th class="head"><p>name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">old</span> <span class="pre">id</span></code></p></td>
+<td><p>[<code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">id</span></code> / <code class="docutils literal notranslate"><span class="pre">&lt;empty&gt;</span></code>]</p></td>
+<td><p>[<code class="docutils literal notranslate"><span class="pre">chromosome</span></code> / <code class="docutils literal notranslate"><span class="pre">plasmid</span></code> / <code class="docutils literal notranslate"><span class="pre">contig</span></code> / <code class="docutils literal notranslate"><span class="pre">&lt;empty&gt;</span></code>]</p></td>
+<td><p>[<code class="docutils literal notranslate"><span class="pre">circular</span></code> / <code class="docutils literal notranslate"><span class="pre">linear</span></code> / <code class="docutils literal notranslate"><span class="pre">&lt;empty&gt;</span></code>]</p></td>
+<td><p>[<code class="docutils literal notranslate"><span class="pre">name</span></code> / <code class="docutils literal notranslate"><span class="pre">&lt;empty&gt;</span></code>]</p></td>
+</tr>
+</tbody>
+</table>
+<p>For each input sequence recognized via the <code class="docutils literal notranslate"><span class="pre">original</span> <span class="pre">locus</span> <span class="pre">id</span></code> a <code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">locus</span> <span class="pre">id</span></code>, the replicon <code class="docutils literal notranslate"><span class="pre">type</span></code> and the <code class="docutils literal notranslate"><span class="pre">topology</span></code> as well a <code class="docutils literal notranslate"><span class="pre">name</span></code> can be explicitly set.</p>
+<p>Shortcuts:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">chromosome</span></code>: <code class="docutils literal notranslate"><span class="pre">c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plasmid</span></code>: <code class="docutils literal notranslate"><span class="pre">p</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">circular</span></code>: <code class="docutils literal notranslate"><span class="pre">c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">linear</span></code>: <code class="docutils literal notranslate"><span class="pre">l</span></code></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;empty&gt;</span></code> values (<code class="docutils literal notranslate"><span class="pre">-</span></code> / ``) will be replaced by defaults. If <strong>new locus id</strong> is <code class="docutils literal notranslate"><span class="pre">empty</span></code>, a new contig name will be autogenerated.</p>
+<p>Defaults:</p>
+<ul class="simple">
+<li><p>type: <code class="docutils literal notranslate"><span class="pre">contig</span></code></p></li>
+<li><p>topology: <code class="docutils literal notranslate"><span class="pre">linear</span></code></p></li>
+</ul>
+<p>Example:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>original locus id</p></th>
+<th class="head"><p>new locus id</p></th>
+<th class="head"><p>type</p></th>
+<th class="head"><p>topology</p></th>
+<th class="head"><p>name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NODE_1</p></td>
+<td><p>chrom</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">chromosome</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">circular</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>NODE_2</p></td>
+<td><p>p1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plasmid</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pXYZ1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>NODE_3</p></td>
+<td><p>p2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">p</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">c</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pXYZ2</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>NODE_4</p></td>
+<td><p>special-contig-name-xyz</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-</span></code></p></td>
+<td><p>-</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>NODE_5</p></td>
+<td><p>``</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-</span></code></p></td>
+<td><p>-</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="output">
+<h3>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h3>
+<p>Annotation results are provided in standard bioinformatics file formats:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.tsv</span></code>: annotations as simple human readble tab separated values</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.gff3</span></code>: annotations &amp; sequences in GFF3 format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.gbff</span></code>: annotations &amp; sequences in (multi) GenBank format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.embl</span></code>: annotations &amp; sequences in (multi) EMBL format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.fna</span></code>: replicon/contig DNA sequences as FASTA</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.faa</span></code>: CDS/sORF amino acid sequences as FASTA</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.hypotheticals.tsv</span></code>: further information on hypothetical protein CDS as simple human readble tab separated values</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.hypotheticals.faa</span></code>: hypothetical protein CDS amino acid sequences as FASTA</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;</span></code> can be set via <code class="docutils literal notranslate"><span class="pre">--prefix</span> <span class="pre">&lt;prefix&gt;</span></code>. If no prefix is set, Bakta uses the input file prefix.</p>
+<p>Additionally, Bakta provides detailed information on each annotated feature in a standardized machine-readable JSON file <code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.json</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+    &quot;genome&quot;: {
+        &quot;genus&quot;: &quot;Escherichia&quot;,
+        &quot;species&quot;: &quot;coli&quot;,
+        ...
+    },
+    &quot;stats&quot;: {
+        &quot;size&quot;: 5594605,
+        &quot;gc&quot;: 0.497,
+        ...
+    },
+    &quot;features&quot;: [
+        {
+            &quot;type&quot;: &quot;cds&quot;,
+            ...
+        },
+        ...
+    ],
+    &quot;sequences&quot;: [
+        {
+            &quot;id&quot;: &quot;c1&quot;,
+            &quot;description&quot;: &quot;[organism=Escherichia coli] [completeness=complete] [topology=circular]&quot;,
+            &quot;sequence&quot;: &quot;AGCTTT...&quot;,
+            &quot;length&quot;: 5498578,
+            &quot;complete&quot;: true,
+            &quot;type&quot;: &quot;chromosome&quot;,
+            &quot;topology&quot;: &quot;circular&quot;
+            ...
+        },
+        ...
+    ]
+}
+</pre></div>
+</div>
+<p>Exemplary annotation result files for several genomes (mostly ESKAPE species) are hosted at Zenodo: <a class="reference external" href="https://doi.org/10.5281/zenodo.4770026"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.4770026.svg" /></a></p>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>usage: bakta <span class="o">[</span>--db DB<span class="o">]</span> <span class="o">[</span>--min-contig-length MIN_CONTIG_LENGTH<span class="o">]</span> <span class="o">[</span>--prefix PREFIX<span class="o">]</span> <span class="o">[</span>--output OUTPUT<span class="o">]</span> <span class="o">[</span>--genus GENUS<span class="o">]</span> <span class="o">[</span>--species SPECIES<span class="o">]</span> <span class="o">[</span>--strain STRAIN<span class="o">]</span> <span class="o">[</span>--plasmid PLASMID<span class="o">]</span> <span class="o">[</span>--complete<span class="o">]</span> <span class="o">[</span>--prodigal-tf PRODIGAL_TF<span class="o">]</span> <span class="o">[</span>--translation-table <span class="o">{</span><span class="m">11</span>,4<span class="o">}]</span> <span class="o">[</span>--gram <span class="o">{</span>+,-,?<span class="o">}]</span> <span class="o">[</span>--locus LOCUS<span class="o">]</span>
+             <span class="o">[</span>--locus-tag LOCUS_TAG<span class="o">]</span> <span class="o">[</span>--keep-contig-headers<span class="o">]</span> <span class="o">[</span>--replicons REPLICONS<span class="o">]</span> <span class="o">[</span>--skip-trna<span class="o">]</span> <span class="o">[</span>--skip-tmrna<span class="o">]</span> <span class="o">[</span>--skip-rrna<span class="o">]</span> <span class="o">[</span>--skip-ncrna<span class="o">]</span> <span class="o">[</span>--skip-ncrna-region<span class="o">]</span> <span class="o">[</span>--skip-crispr<span class="o">]</span> <span class="o">[</span>--skip-cds<span class="o">]</span> <span class="o">[</span>--skip-sorf<span class="o">]</span> <span class="o">[</span>--skip-gap<span class="o">]</span> <span class="o">[</span>--skip-ori<span class="o">]</span> <span class="o">[</span>--help<span class="o">]</span> <span class="o">[</span>--verbose<span class="o">]</span> <span class="o">[</span>--threads THREADS<span class="o">]</span>
+             <span class="o">[</span>--tmp-dir TMP_DIR<span class="o">]</span> <span class="o">[</span>--version<span class="o">]</span>
+             &lt;genome&gt;
+
+Rapid <span class="p">&amp;</span> standardized annotation of bacterial genomes <span class="p">&amp;</span> plasmids.
+
+positional arguments:
+  &lt;genome&gt;              Genome sequences <span class="k">in</span> <span class="o">(</span>zipped<span class="o">)</span> fasta format
+
+Input / Output:
+  --db DB, -d DB        Database path <span class="o">(</span><span class="nv">default</span> <span class="o">=</span> &lt;bakta_path&gt;/db<span class="o">)</span>. Can also be provided as BAKTA_DB environment variable.
+  --min-contig-length MIN_CONTIG_LENGTH, -m MIN_CONTIG_LENGTH
+                        Minimum contig size <span class="o">(</span><span class="nv">default</span> <span class="o">=</span> <span class="m">1</span><span class="o">)</span>
+  --prefix PREFIX, -p PREFIX
+                        Prefix <span class="k">for</span> output files
+  --output OUTPUT, -o OUTPUT
+                        Output directory <span class="o">(</span><span class="nv">default</span> <span class="o">=</span> current working directory<span class="o">)</span>
+
+Organism:
+  --genus GENUS         Genus name
+  --species SPECIES     Species name
+  --strain STRAIN       Strain name
+  --plasmid PLASMID     Plasmid name
+
+Annotation:
+  --complete            All sequences are <span class="nb">complete</span> replicons <span class="o">(</span>chromosome/plasmid<span class="o">[</span>s<span class="o">])</span>
+  --prodigal-tf PRODIGAL_TF
+                        Path to existing Prodigal training file to use <span class="k">for</span> CDS prediction
+  --translation-table <span class="o">{</span><span class="m">11</span>,4<span class="o">}</span>
+                        Translation table: <span class="m">11</span>/4 <span class="o">(</span><span class="nv">default</span> <span class="o">=</span> <span class="m">11</span><span class="o">)</span>
+  --gram <span class="o">{</span>+,-,?<span class="o">}</span>        Gram type: +/-/? <span class="o">(</span><span class="nv">default</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span><span class="o">)</span>
+  --locus LOCUS         Locus prefix <span class="o">(</span><span class="nv">default</span> <span class="o">=</span> <span class="s1">&#39;contig&#39;</span><span class="o">)</span>
+  --locus-tag LOCUS_TAG
+                        Locus tag prefix <span class="o">(</span><span class="nv">default</span> <span class="o">=</span> autogenerated<span class="o">)</span>
+  --keep-contig-headers
+                        Keep original contig headers
+  --replicons REPLICONS, -r REPLICONS
+                        Replicon information table <span class="o">(</span>tsv/csv<span class="o">)</span>
+
+Workflow:
+  --skip-trna           Skip tRNA detection <span class="p">&amp;</span> annotation
+  --skip-tmrna          Skip tmRNA detection <span class="p">&amp;</span> annotation
+  --skip-rrna           Skip rRNA detection <span class="p">&amp;</span> annotation
+  --skip-ncrna          Skip ncRNA detection <span class="p">&amp;</span> annotation
+  --skip-ncrna-region   Skip ncRNA region detection <span class="p">&amp;</span> annotation
+  --skip-crispr         Skip CRISPR array detection <span class="p">&amp;</span> annotation
+  --skip-cds            Skip CDS detection <span class="p">&amp;</span> annotation
+  --skip-sorf           Skip sORF detection <span class="p">&amp;</span> annotation
+  --skip-gap            Skip gap detection <span class="p">&amp;</span> annotation
+  --skip-ori            Skip oriC/oriT detection <span class="p">&amp;</span> annotation
+
+General:
+  --help, -h            Show this <span class="nb">help</span> message and <span class="nb">exit</span>
+  --verbose, -v         Print verbose information
+  --threads THREADS, -t THREADS
+                        Number of threads to use <span class="o">(</span><span class="nv">default</span> <span class="o">=</span> number of available CPUs<span class="o">)</span>
+  --tmp-dir TMP_DIR     Location <span class="k">for</span> temporary files <span class="o">(</span><span class="nv">default</span> <span class="o">=</span> system dependent auto detection<span class="o">)</span>
+  --version             show programs version number and <span class="nb">exit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="annotation-workflow">
+<h2>Annotation Workflow<a class="headerlink" href="#annotation-workflow" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rnas">
+<h3>RNAs<a class="headerlink" href="#rnas" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>tRNA genes: tRNAscan-SE 2.0</p></li>
+<li><p>tmRNA genes: Aragorn</p></li>
+<li><p>rRNA genes: Infernal vs. Rfam rRNA covariance models</p></li>
+<li><p>ncRNA genes: Infernal vs. Rfam ncRNA covariance models</p></li>
+<li><p>ncRNA cis-regulatory regions: Infernal vs. Rfam ncRNA covariance models</p></li>
+<li><p>CRISPR arrays: PILER-CR</p></li>
+</ol>
+<p>Bakta distinguishes ncRNA genes and (cis-regulatory) regions in order to enable the distinct handling thereof during the annotation process, <em>i.e.</em> feature overlap detection.</p>
+<p>ncRNA gene types:</p>
+<ul class="simple">
+<li><p>sRNA</p></li>
+<li><p>antisense</p></li>
+<li><p>ribozyme</p></li>
+<li><p>antitoxin</p></li>
+</ul>
+<p>ncRNA (cis-regulatory) region types:</p>
+<ul class="simple">
+<li><p>riboswitch</p></li>
+<li><p>thermoregulator</p></li>
+<li><p>leader</p></li>
+<li><p>frameshift element</p></li>
+</ul>
+</div>
+<div class="section" id="coding-sequences">
+<h3>Coding sequences<a class="headerlink" href="#coding-sequences" title="Permalink to this headline">¶</a></h3>
+<p>The structural prediction is conducted via Prodigal and complemented by a custom detection of sORF &lt; 30 aa.</p>
+<p>To rapidly identify known protein sequences with exact sequence matches and to conduct a comprehensive annotations, Bakta utilizes a compact read-only SQLite database comprising protein sequence digests and pre-assigned annotations for millions of known protein sequences and clusters.</p>
+<p>Conceptual terms:</p>
+<ul class="simple">
+<li><p><strong>UPS</strong>: unique protein sequences identified via length and MD5 hash digests (100% coverage &amp; 100% sequence identity)</p></li>
+<li><p><strong>IPS</strong>: identical protein sequences comprising seeds of UniProt’s UniRef100 protein sequence clusters</p></li>
+<li><p><strong>PSC</strong>: protein sequences clusters comprising seeds of UniProt’s UniRef90 protein sequence clusters</p></li>
+</ul>
+<p><strong>CDS</strong>:</p>
+<ol class="simple">
+<li><p>Prediction via Prodigal respecting sequences’ completeness (distinct prediction for complete replicons and uncompleted contigs)</p></li>
+<li><p>discard spurious CDS via AntiFam</p></li>
+<li><p>Detection of UPSs via MD5 digests and lookup of related IPS and PCS</p></li>
+<li><p>Sequence alignments of remainder via Diamond vs. PSC (query/subject coverage=0.8, identity=0.9)</p></li>
+<li><p>Execution of expert systems:</p></li>
+</ol>
+<ul class="simple">
+<li><p>AMR: AMRFinderPlus</p></li>
+<li><p>Alignments: NCBI BlastRules, VFDB</p></li>
+</ul>
+<ol class="simple">
+<li><p>Combination of available IPS, PSC &amp; expert system information favouring more specific annotations and avoiding redundancy</p></li>
+</ol>
+<p>CDS without IPS or PSC hits as well as those without gene symbols or product descriptions different from <code class="docutils literal notranslate"><span class="pre">hypothetical</span></code> will be marked as <code class="docutils literal notranslate"><span class="pre">hypothetical</span></code>.</p>
+<p>Such hypothetical CDS are further analyzed:</p>
+<ol class="simple">
+<li><p>Detection of Pfam domains, repeats &amp; motifs</p></li>
+<li><p>Calculation of protein sequence statistics, <em>i.e.</em> molecular weight, isoelectric point</p></li>
+</ol>
+<p><strong>sORFs</strong>:</p>
+<ol class="simple">
+<li><p>Custom sORF detection &amp; extraction with amino acid lengths &lt; 30 aa</p></li>
+<li><p>Apply strict feature type-dependent overlap filters</p></li>
+<li><p>discard spurious sORF via AntiFam</p></li>
+<li><p>Detection of UPS via MD5 hashes and lookup of related IPS</p></li>
+<li><p>Sequence alignments of remainder via Diamond vs. an sORF subset of PSCs (coverage=0.9, identity=0.9)</p></li>
+<li><p>Exclude sORF without sufficient annotation information</p></li>
+</ol>
+<p>sORF not identified via IPS or PSC will be discarded. Additionally, all sORF without gene symbols or product descriptions different from <code class="docutils literal notranslate"><span class="pre">hypothetical</span></code> will be discarded.
+Due due to uncertain nature of sORF prediction, only those identified via IPS / PSC hits exhibiting proper gene symbols or product descriptions different from <code class="docutils literal notranslate"><span class="pre">hypothetical</span></code> will be included in the final annotation.</p>
+</div>
+<div class="section" id="miscellaneous">
+<h3>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>Gaps: in-mem detection &amp; annotation of sequence gaps</p></li>
+<li><p>oriC/oriV/oriT: Blast+ (cov=0.8, id=0.8) vs. <a class="reference external" href="https://github.com/phac-nml/mob-suite">MOB-suite</a> oriT &amp; <a class="reference external" href="http://tubic.org/doric/public/index.php">DoriC</a> oriC/oriV sequences. Annotations of ori regions take into account overlapping Blast+ hits and are conducted based on a majority vote heuristic. Region edges are fuzzy - use with caution!</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="database">
+<h2>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
+<p>The Bakta database comprises a set of AA &amp; DNA sequence databases as well as HMM &amp; covariance models.
+At its core Bakta utilizes a compact read-only SQLite db storing protein sequence digests, lengths, pre-assigned annotations and dbxrefs of UPS, IPS and PSC from:</p>
+<ul class="simple">
+<li><p><strong>UPS</strong>: UniParc / UniProtKB (198,764,035)</p></li>
+<li><p><strong>IPS</strong>: UniProt UniRef100 (185,077,759)</p></li>
+<li><p><strong>PSC</strong>: UniProt UniRef90 (83,486,930)</p></li>
+</ul>
+<p>This allows the exact protein sequences identification via MD5 digests &amp; sequence lengths as well as the rapid subsequent lookup of related information. Protein sequence digests are checked for hash collisions while the db creation process.
+IPS &amp; PSC have been comprehensively pre-annotated integrating annotations &amp; database <em>dbxrefs</em> from:</p>
+<ul class="simple">
+<li><p>NCBI nonredundant proteins (IPS: 150,463,165)</p></li>
+<li><p>NCBI COG db (PSC: 3,353,131)</p></li>
+<li><p>SwissProt EC/GO terms (PSC: 335,256)</p></li>
+<li><p>NCBI AMRFinderPlus (IPS: 6,255, PSC: 43,413)</p></li>
+<li><p>ISFinder db (IPS: 27,841, PSC: 10,161)</p></li>
+</ul>
+<p>To provide high quality annotations for distinct protein sequences of high importance (AMR, VF, <em>etc</em>) which cannot sufficiently be covered by the IPS/PSC approach, Bakta provides additional expert systems. For instance, AMR genes, are annotated via NCBI’s AMRFinderPlus.
+An expandable alignment-based expert system supports the incorporation of high quality annotations from multiple sources. This currenlty comprises NCBI’s BlastRules as well as VFDB and will be complemented with more expert annotation sources over time. Internally, this expert system is based on a Diamond DB comprising the following information in a standardized format:</p>
+<ul class="simple">
+<li><p>source: <em>e.g.</em> BlastRules</p></li>
+<li><p>rank: a precedence rank</p></li>
+<li><p>min identity</p></li>
+<li><p>min query coverage</p></li>
+<li><p>min model coverage</p></li>
+<li><p>gene lable</p></li>
+<li><p>product description</p></li>
+<li><p>dbxrefs</p></li>
+</ul>
+<p>Rfam covariance models:</p>
+<ul class="simple">
+<li><p>ncRNA: 750</p></li>
+<li><p>ncRNA cis-regulatory regions: 107</p></li>
+</ul>
+<p>To provide FAIR annotations, the database releases are SemVer versioned (w/o patch level), <em>i.e.</em> <code class="docutils literal notranslate"><span class="pre">&lt;major&gt;.&lt;minor&gt;</span></code>. For each version we provide a comprehensive log file tracking all imported sequences as well as annotations thereof. The db schema is represented by the <code class="docutils literal notranslate"><span class="pre">&lt;major&gt;</span></code> digit and automatically checked at runtime by Bakta in order to ensure compatibility. Content updates are tracked by the <code class="docutils literal notranslate"><span class="pre">&lt;minor&gt;</span></code> digit.</p>
+<p>All database releases (latest 1.0, 25 Gb zipped, 48 Gb unzipped) are hosted at Zenodo: <a class="reference external" href="https://doi.org/10.5281/zenodo."><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo..svg" /></a></p>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>AMRFinder fails</strong>
+If AMRFinder constantly crashes even on fresh setups, then AMRFinder needs to setup its own internal database. This is required only once: <code class="docutils literal notranslate"><span class="pre">amrfinder</span> <span class="pre">-U</span></code>.</p></li>
+<li><p><strong>Nice, but I’m mising XYZ…</strong>
+Bakta is quite new and we’re keen to constantly improve it and further expand its feature set. In case there’s anything missing, please do not hesitate to open an issue and ask for it!</p></li>
+<li><p><strong>Bakta is running too long without CPU load… why?</strong>
+Bakta takes advantage of an SQLite DB which results in high storage IO loads. If this DB is stored on a remote / network volume, the lookup of IPS/PSC annotations might take a long time. In these cases, please, consider moving the DB to a local volume or hard drive. Setting POSIX permissions of the db directory to read/access only (<code class="docutils literal notranslate"><span class="pre">555</span></code>) and files to read only (<code class="docutils literal notranslate"><span class="pre">444</span></code>) might also help:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod <span class="m">444</span> &lt;db-path&gt;/*
+chmod <span class="m">555</span> &lt;db-path&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="issues-and-feature-requests">
+<h2>Issues and Feature Requests<a class="headerlink" href="#issues-and-feature-requests" title="Permalink to this headline">¶</a></h2>
+<p>Bakta is brand new and like in every software, expect some bugs lurking around. So, if you run into any issues with Bakta, we’d be happy to hear about it.
+Therefore, please, execute bakta in verbose mode (<code class="docutils literal notranslate"><span class="pre">-v</span></code>) and do not hesitate to file an issue including as much information as possible:</p>
+<ul class="simple">
+<li><p>a detailed description of the issue</p></li>
+<li><p>command line output</p></li>
+<li><p>log file (<code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.log</span></code>)</p></li>
+<li><p>result file (<code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;.json</span></code>) <em>if possible</em></p></li>
+<li><p>a reproducible example of the issue with an input file that you can share <em>if possible</em></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="REST-API.html" class="btn btn-neutral float-right" title="Bakta API-Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Bakta’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, O. Schwengers, L. Jelonek, M. Dieckmann, S. Beyvers.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
