@@ -224,15 +224,17 @@ Results for jobs with a ``SUCCESFUL`` status can be retrieved via the :ref:`resu
 
 Currently the following file formats for results are provided:
 
-* EMBL - .embl file format
-* FAA - Fasta (amino acids)
-* FAAHypothetical - Fasta (amino acids) of hypothetical proteins
-* FNA - Fasta (nucleotides)
-* GBFF - Genbank flat file
-* GFF3 - General Feature Format
-* JSON - Bakta JSON Format
-* TSV - Tab separated list
-* TSVHypothetical - Tab separated list of hypothetical proteins
+* **EMBL**
+* **FAA** 
+* **FAAHypothetical**
+* **FNA** 
+* **GBFF** 
+* **GFF3** 
+* **JSON** 
+* **TSV** 
+* **TSVHypothetical**
+
+More information about the structure of these output formats can be found in the `CLI Documentation <https://bakta.readthedocs.io/en/latest/BAKTA.html#output>`_
 
 .. note::
   The ``JSON`` output format can be visualized locally via the WebUI at `https://bakta.computational.bio <https://bakta.computational.bio>`_.
