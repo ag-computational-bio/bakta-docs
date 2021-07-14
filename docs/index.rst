@@ -23,12 +23,6 @@ Contents
    :hidden:
    
    REST-API documentation <REST-API>
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   
-   Web-UI documentation <WEBUI>
    
    
 Features
