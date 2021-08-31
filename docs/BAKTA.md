@@ -1,4 +1,16 @@
-# Bakta CLI documentation
+# Bakta CLI Documentation
+
+## Contents
+
+- [Installation](#installation)
+- [Examples](#examples)
+- [Input & Output](#input-and-output)
+- [Usage](#usage)
+- [Annotation Workflow](#annotation-workflow)
+- [Database](#database)
+- [Genome Submission](#genome-submission)
+- [FAQ](#faq)
+- [Issues & Feature Requests](#issues-and-feature-requests)
 
 ## Installation
 
@@ -75,19 +87,22 @@ $ bakta_db list
 ...
 ```
 
-Download the most recent compatible database version:
+Download the most recent compatible database version we recommend to use the internal database download & setup tool:
 
 ```bash
 $ bakta_db download --output <output-path>
 ```
 
-or download it manually:
+Of course, the database can also be downloaded manually:
 
 ```bash
-$ wget https://zenodo.org/record/4662588/files/db.tar.gz
+$ wget https://zenodo.org/record/5215743/files/db.tar.gz
 $ tar -xzf db.tar.gz
 $ rm db.tar.gz
+$ amrfinder_update --force_update --database db/amrfinderplus-db/
 ```
+
+In this case, please also download the AMRFinderPlus database as indicated above.
 
 Update an existing database:
 
@@ -110,7 +125,7 @@ For system-wide setups, the database can also be copied to the Bakta base direct
 $ cp -r db/ <bakta-installation-dir>
 ```
 
-As Bakta takes advantage of AMRFinderPlus for the annotation of AMR genes, AMRFinder is required to setup its own internal databases, once via `amrfinder -U`.
+As Bakta takes advantage of AMRFinderPlus for the annotation of AMR genes, AMRFinder is required to setup its own internal databases in a `<amrfinderplus-db>` subfolder within the Bakta database `<db-path>`, once via `amrfinder_update --force_update --database <db-path>/amrfinderplus-db/`. To ease this process we recommend to use Bakta's internal download procedure.
 
 ## Examples
 
@@ -177,6 +192,7 @@ Annotation results are provided in standard bioinformatics file formats:
 - `<prefix>.gbff`: annotations & sequences in (multi) GenBank format
 - `<prefix>.embl`: annotations & sequences in (multi) EMBL format
 - `<prefix>.fna`: replicon/contig DNA sequences as FASTA
+- `<prefix>.ffn`: feature nucleotide sequences as FASTA
 - `<prefix>.faa`: CDS/sORF amino acid sequences as FASTA
 - `<prefix>.hypotheticals.tsv`: further information on hypothetical protein CDS as simple human readble tab separated values
 - `<prefix>.hypotheticals.faa`: hypothetical protein CDS amino acid sequences as FASTA
@@ -200,6 +216,12 @@ Additionally, Bakta provides detailed information on each annotated feature in a
     "features": [
         {
             "type": "cds",
+            "contig": "contig_1",
+            "start": 971,
+            "stop": 1351,
+            "strand": "-",
+            "gene": "lsoB",
+            "product": "type II toxin-antitoxin system antitoxin LsoB",
             ...
         },
         ...
@@ -228,7 +250,7 @@ Usage:
 
 ```bash
 usage: bakta [--db DB] [--min-contig-length MIN_CONTIG_LENGTH] [--prefix PREFIX] [--output OUTPUT] [--genus GENUS] [--species SPECIES] [--strain STRAIN] [--plasmid PLASMID] [--complete] [--prodigal-tf PRODIGAL_TF] [--translation-table {11,4}] [--gram {+,-,?}] [--locus LOCUS]
-             [--locus-tag LOCUS_TAG] [--keep-contig-headers] [--replicons REPLICONS] [--skip-trna] [--skip-tmrna] [--skip-rrna] [--skip-ncrna] [--skip-ncrna-region] [--skip-crispr] [--skip-cds] [--skip-sorf] [--skip-gap] [--skip-ori] [--help] [--verbose] [--threads THREADS]
+             [--locus-tag LOCUS_TAG] [--keep-contig-headers] [--replicons REPLICONS] [--compliant] [--skip-trna] [--skip-tmrna] [--skip-rrna] [--skip-ncrna] [--skip-ncrna-region] [--skip-crispr] [--skip-cds] [--skip-sorf] [--skip-gap] [--skip-ori] [--help] [--verbose] [--threads THREADS]
              [--tmp-dir TMP_DIR] [--version]
              <genome>
 
@@ -240,7 +262,7 @@ positional arguments:
 Input / Output:
   --db DB, -d DB        Database path (default = <bakta_path>/db). Can also be provided as BAKTA_DB environment variable.
   --min-contig-length MIN_CONTIG_LENGTH, -m MIN_CONTIG_LENGTH
-                        Minimum contig size (default = 1)
+                        Minimum contig size (default = 1; 200 in compliant mode)
   --prefix PREFIX, -p PREFIX
                         Prefix for output files
   --output OUTPUT, -o OUTPUT
@@ -266,6 +288,7 @@ Annotation:
                         Keep original contig headers
   --replicons REPLICONS, -r REPLICONS
                         Replicon information table (tsv/csv)
+  --compliant           Force Genbank/ENA/DDJB compliance
 
 Workflow:
   --skip-trna           Skip tRNA detection & annotation
@@ -326,17 +349,19 @@ Conceptual terms:
 - **UPS**: unique protein sequences identified via length and MD5 hash digests (100% coverage & 100% sequence identity)
 - **IPS**: identical protein sequences comprising seeds of UniProt's UniRef100 protein sequence clusters
 - **PSC**: protein sequences clusters comprising seeds of UniProt's UniRef90 protein sequence clusters
+- **PSCC**: protein sequences clusters of clusters comprising annotations of UniProt's UniRef50 protein sequence clusters
 
 **CDS**:
 
 1. Prediction via Prodigal respecting sequences' completeness (distinct prediction for complete replicons and uncompleted contigs)
 2. discard spurious CDS via AntiFam
 3. Detection of UPSs via MD5 digests and lookup of related IPS and PCS
-4. Sequence alignments of remainder via Diamond vs. PSC (query/subject coverage=0.8, identity=0.9)
-5. Execution of expert systems:
+4. Sequence alignments of remainder via Diamond vs. PSC (query/subject coverage=0.8, identity=0.5)
+5. Assign protein sequences to UniRef90 or UniRef50 clusters if alignment hits meet an identity larger than 0.9 or 0.5, respectively
+6. Execution of expert systems:
   - AMR: AMRFinderPlus
   - Alignments: NCBI BlastRules, VFDB
-6. Combination of available IPS, PSC & expert system information favouring more specific annotations and avoiding redundancy
+7. Combination of available IPS, PSC, PSCC and expert system information favouring more specific annotations and avoiding redundancy
 
 CDS without IPS or PSC hits as well as those without gene symbols or product descriptions different from `hypothetical` will be marked as `hypothetical`.
 
@@ -367,9 +392,10 @@ Due due to uncertain nature of sORF prediction, only those identified via IPS / 
 The Bakta database comprises a set of AA & DNA sequence databases as well as HMM & covariance models.
 At its core Bakta utilizes a compact read-only SQLite db storing protein sequence digests, lengths, pre-assigned annotations and dbxrefs of UPS, IPS and PSC from:
 
-- **UPS**: UniParc / UniProtKB (198,764,035)
-- **IPS**: UniProt UniRef100 (185,077,759)
-- **PSC**: UniProt UniRef90 (83,486,930)
+- **UPS**: UniParc / UniProtKB (214,847,897)
+- **IPS**: UniProt UniRef100 (199,630,327)
+- **PSC**: UniProt UniRef90 (90,580,050)
+- **PSCC**: UniProt UniRef50 (12,127,845)
 
 This allows the exact protein sequences identification via MD5 digests & sequence lengths as well as the rapid subsequent lookup of related information. Protein sequence digests are checked for hash collisions while the db creation process.
 IPS & PSC have been comprehensively pre-annotated integrating annotations & database *dbxrefs* from:
@@ -394,28 +420,86 @@ An expandable alignment-based expert system supports the incorporation of high q
 
 Rfam covariance models:
 
-- ncRNA: 750
-- ncRNA cis-regulatory regions: 107
+- ncRNA: 798
+- ncRNA cis-regulatory regions: 267
 
 To provide FAIR annotations, the database releases are SemVer versioned (w/o patch level), *i.e.* `<major>.<minor>`. For each version we provide a comprehensive log file tracking all imported sequences as well as annotations thereof. The db schema is represented by the `<major>` digit and automatically checked at runtime by Bakta in order to ensure compatibility. Content updates are tracked by the `<minor>` digit.
 
-All database releases (latest 1.0, 25 Gb zipped, 48 Gb unzipped) are hosted at Zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo..svg)](https://doi.org/10.5281/zenodo.)
+All database releases (latest 3.0, 28 Gb zipped, 53 Gb unzipped) are hosted at Zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4247252.svg)](https://doi.org/10.5281/zenodo.4247252)
+
+## Genome Submission
+
+Most genomes annotated with Bakta should be ready-to-submid to INSDC member databases GenBank and ENA. As a first step, please register your BioProject (e.g. PRJNA123456) and your locus_tag prefix (*e.g.* ESAKAI).
+
+```bash
+# annotate your genome in `--compliant` mode:
+$ bakta --db <db-path> -v --genus Escherichia --species "coli O157:H7" --strain Sakai --complete --compliant --locus-tag ESAKAI test/data/GCF_000008865.2.fna.gz
+```
+
+### GenBank
+
+Genomes are submitted to GenBank via Fasta (`.fna`) and SQN files. Therefore, `.sqn` files can be created via `.gff3` files and NCBI's new [table2asn_GFF](https://www.ncbi.nlm.nih.gov/genbank/genomes_gff) tool.
+Please have all additional files (template.txt) prepared:
+
+```bash
+# download table2asn_GFF for Linux
+$ wget https://ftp.ncbi.nih.gov/toolbox/ncbi_tools/converters/by_program/table2asn_GFF/linux64.table2asn_GFF.gz
+$ gunzip linux64.table2asn_GFF.gz
+
+# or MacOS
+$ https://ftp.ncbi.nih.gov/toolbox/ncbi_tools/converters/by_program/table2asn_GFF/mac.table2asn_GFF.gz
+$ gunzip mac.table2asn_GFF.gz
+$ chmod 755 linux64.table2asn_GFF.gz mac.table2asn_GFF.gz
+
+# create the SQN file:
+$ linux64.table2asn_GFF -M n -J -c w -t template.txt -V vbt -l paired-ends -i GCF_000008865.2.fna -f GCF_000008865.2.gff3 -o GCF_000008865.2.sqn -Z
+```
+
+### ENA
+
+Genomes are submitted to ENA as EMBL (`.embl`) files via EBI's [Webin-CLI](https://ena-docs.readthedocs.io/en/latest/submit/general-guide/webin-cli.html) tool.
+Please have all additional files (manifest.tsv, chrom-list.tsv) prepared as described [here](https://ena-docs.readthedocs.io/en/latest/submit/fileprep/assembly.html#flat-file).
+
+```bash
+# download ENA Webin-CLI
+$ wget https://github.com/enasequence/webin-cli/releases/download/v4.0.0/webin-cli-4.0.0.jar
+
+$ gzip -k GCF_000008865.2.embl
+$ gzip -k chrom-list.tsv
+$ java -jar webin-cli-4.0.0.jar -submit -userName=<EMAIL> -password <PWD> -context genome -manifest manifest.tsv
+```
+
+Exemplarey manifest.tsv and chrom-list.tsv files might look like:
+
+```bash
+$ cat chrom-list.tsv
+STUDY    PRJEB44484
+SAMPLE    ERS6291240
+ASSEMBLYNAME    GCF
+ASSEMBLY_TYPE    isolate
+COVERAGE    100
+PROGRAM    SPAdes
+PLATFORM    Illumina
+MOLECULETYPE    genomic DNA
+FLATFILE    GCF_000008865.2.embl.gz
+CHROMOSOME_LIST    chrom-list.tsv.gz
+
+$ cat chrom-list.tsv
+contig_1    contig_1    circular-chromosome
+contig_2    contig_2    circular-plasmid
+contig_3    contig_3    circular-plasmid
+```
 
 ## FAQ
 
 * __AMRFinder fails__
-If AMRFinder constantly crashes even on fresh setups, then AMRFinder needs to setup its own internal database. This is required only once: `amrfinder -U`.
+If AMRFinder constantly crashes even on fresh setups and Bakta's database was downloaded manually, then AMRFinder needs to setup its own internal database. This is required only once: `amrfinder_update --force_update --database <bakta-db>/amrfinderplus-db`. You could also try Bakta's internal database download logic automatically taking care of this: `bakta_db download --output <bakta-db>`
 
 * __Nice, but I'm mising XYZ...__
 Bakta is quite new and we're keen to constantly improve it and further expand its feature set. In case there's anything missing, please do not hesitate to open an issue and ask for it!
 
 * __Bakta is running too long without CPU load... why?__
-Bakta takes advantage of an SQLite DB which results in high storage IO loads. If this DB is stored on a remote / network volume, the lookup of IPS/PSC annotations might take a long time. In these cases, please, consider moving the DB to a local volume or hard drive. Setting POSIX permissions of the db directory to read/access only (`555`) and files to read only (`444`) might also help:
-
-```bash
-chmod 444 <db-path>/*
-chmod 555 <db-path>
-```
+Bakta takes advantage of an SQLite DB which results in high storage IO loads. If this DB is stored on a remote / network volume, the lookup of IPS/PSC annotations might take a long time. In these cases, please, consider moving the DB to a local volume or hard drive.
 
 ## Issues and Feature Requests
 

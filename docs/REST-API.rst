@@ -3,7 +3,69 @@ Bakta API-Documentation
 
 Bakta provides a open-access REST-API that can be used to annotate own genomes programmatically. The API and its Swagger documentation can be found `here <https://api.bakta.computational.bio>`__
 
+.. _apiusage:
 
+Usage
+-----
+
+To use the REST-API a three staged process must be established. The requests have to be sent in order. The overall 
+
+
+Initialization
+~~~~~~~~~~~~~~
+
+Initialization of a Bakta Job must start with a :ref:`init request <jobinit>`. The API responds to this request with a unique ``jobID`` and a corresponding ``secret`` as well as three pre-authenticated S3 urls (``uploadLinkFasta``, ``uploadLinkProdigal``, ``uploadLinkReplicons``).
+``jobID`` and the corresponding ``secret`` must be stored locally and are used to identify the user in following requests.
+
+To finish the initialization procedure the three S3-URLs (``uploadLinkFasta``, ``uploadLinkProdigal``, ``uploadLinkReplicons``) must be used to upload data to the internal storage system. For this ``PUT`` requests with data as request body should be used.
+
+``uploadLinkFasta`` should be used to upload the (fasta) sequence data for annotation.
+``uploadLinkProdigal`` (optional) can be used to upload an additional prodigal training file
+``uploadLinkReplicons`` (optional) should be used to upload a replicon table in ``tsv`` format that describes the provided replicons in the fasta input file
+
+.. note::
+  A ``PUT`` request to all three S3-URLs is necessary to finish the initialization procedure, optional URLs should be satisfied with a request that has an empty body.
+
+
+Job start & Monitoring
+~~~~~~~~~~
+
+After initialization the specific job (identified by ``jobID`` and a corresponding ``secret``) can be scheduled via the :ref:`start request <jobstart>`.
+
+Scheduled jobs are monitored via the :ref:`job list request <joblist>`. This requests contains a list of all monitored ``jobIDs`` and ``secrets``. The API responds with a matching JSON list of ``jobStatuses`` .
+The :ref:`job list request <joblist>` should be repeated until all jobs have either the ``SUCCESSFUL`` or ``ERROR`` status. Newly scheduled jobs have the ``INIT`` status, currently running jobs ``RUNNING``.
+
+.. note::
+  The ``INIT`` status refers to a successfully started job that has not been initialized for excecution. Depending on the current load of the underlying hardware and position in the scheduling queue it may take a while before a job transitions to the ``RUNNING`` status. A failed job is always indicated by the ``ERROR`` status.
+  
+If multiple jobs are monitored simultaneosly the finalization procedure can be started for a job with ``SUCCESSFUL`` status while others are still ``RUNNING``. In this case the monitoring should continue in parallel for the remaining jobs and the finished job can be removed from the list.
+
+
+Getting results
+~~~~~~~~~~~~
+
+Results for jobs with a ``SUCCESFUL`` status can be retrieved via the :ref:`result request <jobresult>`. The response contains a list (ResultFiles) of different file-formats with corresponding Download URLs. The result files can be retrieved with ``GET`` requests to the URL, or via a regular Webbrowser.
+
+Currently the following file formats for results are provided:
+
+* **EMBL**
+* **FAA** 
+* **FAAHypothetical**
+* **FNA** 
+* **GBFF** 
+* **GFF3** 
+* **JSON** 
+* **TSV** 
+* **TSVHypothetical**
+
+More information about the structure of these output formats can be found in the `CLI Documentation <https://bakta.readthedocs.io/en/latest/BAKTA.html#output>`_
+
+.. note::
+  The ``JSON`` output format can be visualized locally via the WebUI at `https://bakta.computational.bio <https://bakta.computational.bio>`_.
+
+
+.. _endpoints:
+  
 Endpoints
 ----------
 
@@ -58,7 +120,7 @@ Expected request body::
      "job": {
        "secret": "string",
        "jobID": "string"
-     },
+     },.. _apiusage:
      "config": {
        "hasProdigal": true,
        "hasReplicons": true,
@@ -179,65 +241,7 @@ Response::
    }
 
 
-.. _apiusage:
 
-Usage
------
-
-To use the REST-API a three staged process must be established. The requests have to be sent in order. The overall 
-
-
-Initialization
-~~~~~~~~~~~~~~
-
-Initialization of a Bakta Job must start with a :ref:`init request <jobinit>`. The API responds to this request with a unique ``jobID`` and a corresponding ``secret`` as well as three pre-authenticated S3 urls (``uploadLinkFasta``, ``uploadLinkProdigal``, ``uploadLinkReplicons``).
-``jobID`` and the corresponding ``secret`` must be stored locally and are used to identify the user in following requests.
-
-To finish the initialization procedure the three S3-URLs (``uploadLinkFasta``, ``uploadLinkProdigal``, ``uploadLinkReplicons``) must be used to upload data to the internal storage system. For this ``PUT`` requests with data as request body should be used.
-
-``uploadLinkFasta`` should be used to upload the (fasta) sequence data for annotation.
-``uploadLinkProdigal`` (optional) can be used to upload an additional prodigal training file
-``uploadLinkReplicons`` (optional) should be used to upload a replicon table in ``tsv`` format that describes the provided replicons in the fasta input file
-
-.. note::
-  A ``PUT`` request to all three S3-URLs is necessary to finish the initialization procedure, optional URLs should be satisfied with a request that has an empty body.
-
-
-Job start & Monitoring
-~~~~~~~~~~
-
-After initialization the specific job (identified by ``jobID`` and a corresponding ``secret``) can be scheduled via the :ref:`start request <jobstart>`.
-
-Scheduled jobs are monitored via the :ref:`job list request <joblist>`. This requests contains a list of all monitored ``jobIDs`` and ``secrets``. The API responds with a matching JSON list of ``jobStatuses`` .
-The :ref:`job list request <joblist>` should be repeated until all jobs have either the ``SUCCESSFUL`` or ``ERROR`` status. Newly scheduled jobs have the ``INIT`` status, currently running jobs ``RUNNING``.
-
-.. note::
-  The ``INIT`` status refers to a successfully started job that has not been initialized for excecution. Depending on the current load of the underlying hardware and position in the scheduling queue it may take a while before a job transitions to the ``RUNNING`` status. A failed job is always indicated by the ``ERROR`` status.
-  
-If multiple jobs are monitored simultaneosly the finalization procedure can be started for a job with ``SUCCESSFUL`` status while others are still ``RUNNING``. In this case the monitoring should continue in parallel for the remaining jobs and the finished job can be removed from the list.
-
-
-Finalization
-~~~~~~~~~~~~
-
-Results for jobs with a ``SUCCESFUL`` status can be retrieved via the :ref:`result request <jobresult>`. The response contains a list (ResultFiles) of different file-formats with corresponding Download URLs. The result files can be retrieved with ``GET`` requests to the URL, or via a regular Webbrowser.
-
-Currently the following file formats for results are provided:
-
-* **EMBL**
-* **FAA** 
-* **FAAHypothetical**
-* **FNA** 
-* **GBFF** 
-* **GFF3** 
-* **JSON** 
-* **TSV** 
-* **TSVHypothetical**
-
-More information about the structure of these output formats can be found in the `CLI Documentation <https://bakta.readthedocs.io/en/latest/BAKTA.html#output>`_
-
-.. note::
-  The ``JSON`` output format can be visualized locally via the WebUI at `https://bakta.computational.bio <https://bakta.computational.bio>`_.
 
 
 
