@@ -52,22 +52,21 @@ A manuscript is in preparation. To temporarily cite our work, please transitiona
 
    **Schwengers et al. (2021). Bakta:** Rapid & standardized annotation of bacterial genomes & plasmids. GitHub: https://github.com/oschwengers/bakta
 
-Bakta is standing on the shoulder of giants taking advantage of many publicly available databases. If you find any of those used within Bakta useful, please credit these primary sources, as well
+Bakta is standing on the shoulder of giants taking advantage of many publicly available databases. If you find any of those used within Bakta useful, please credit these primary sources, as well:
 
 
-* UniProt: https://doi.org/10.1093/nar/gky1049
-* RefSeq: https://doi.org/10.1093/nar/gkx1068
-* Rfam: https://doi.org/10.1002/cpbi.51
-* AMRFinder: https://doi.org/10.1128/AAC.00483-19
-* ISFinder: https://doi.org/10.1093/nar/gkj014
-* AntiFam: https://doi.org/10.1093/database/bas003
-* Mob-suite: https://doi.org/10.1099/mgen.0.000206
-* DoriC: https://doi.org/10.1093/nar/gky1014
-* COG: https://doi.org/10.1093/bib/bbx117
-* VFDB: https://doi.org/10.1093/nar/gky1080
+UniProt: https://doi.org/10.1093/nar/gky1049
+RefSeq: https://doi.org/10.1093/nar/gkx1068
+Rfam: https://doi.org/10.1002/cpbi.51
+AMRFinder: https://doi.org/10.1128/AAC.00483-19
+ISFinder: https://doi.org/10.1093/nar/gkj014
+AntiFam: https://doi.org/10.1093/database/bas003
+Mob-suite: https://doi.org/10.1099/mgen.0.000206
+DoriC: https://doi.org/10.1093/nar/gky1014
+COG: https://doi.org/10.1093/bib/bbx117
+VFDB: https://doi.org/10.1093/nar/gky1080
 
 
---------------
 * :ref:`search`
 --------------
 
