@@ -52,7 +52,7 @@ A manuscript is in preparation. To temporarily cite our work, please transitiona
 
    **Schwengers et al. (2021). Bakta:** Rapid & standardized annotation of bacterial genomes & plasmids. GitHub: https://github.com/oschwengers/bakta
 
-Bakta is standing on the shoulder of giants taking advantage of many publicly available databases. If you find any of those used within Bakta useful, please credit these primary sources, as well:
+Bakta is standing on the shoulder of giants taking advantage of many publicly available databases. If you find any of those used within Bakta useful, please credit these primary sources, as well
 
 
 * UniProt: https://doi.org/10.1093/nar/gky1049
@@ -69,6 +69,7 @@ Bakta is standing on the shoulder of giants taking advantage of many publicly av
 
 --------------
 * :ref:`search`
+--------------
 
 .. |License: GPL v3| image:: https://img.shields.io/badge/License-GPL%20v3-brightgreen.svg
    :target: https://github.com/oschwengers/bakta/blob/master/LICENSE
