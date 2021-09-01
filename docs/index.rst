@@ -7,25 +7,25 @@ Welcome to Bakta's documentation!
 Bakta is a tool for the rapid & standardized annotation of bacterial genomes & plasmids. It provides **dbxref**-rich and **sORF**-including annotations in machine-readable ``JSON`` & bioinformatics standard file formats for automatic downstream analysis.
 
 
-This documentations contains useful information how to use and install Bakta and its corresponding CLI and web versions.
+This documentations provides information how to install and use Bakta via CLI, web and REST-API.
 
 .. toctree::
    :maxdepth: 2
    :hidden:
    
-   CLI documentation <BAKTA>
+   CLI <BAKTA>
 
 .. toctree::
    :maxdepth: 2
    :hidden:
    
-   REST-API documentation <REST-API>
+   Web <WEBUI>
 
 .. toctree::
    :maxdepth: 2
    :hidden:
    
-   WebUI documentation <WEBUI>
+   REST-API <REST-API>
    
    
 Features
@@ -82,6 +82,6 @@ Bakta is standing on the shoulder of giants taking advantage of many publicly av
 .. |PyPI - Status| image:: https://img.shields.io/pypi/status/bakta.svg
 .. |Conda| image:: https://img.shields.io/conda/v/bioconda/bakta.svg
    :target: https://bioconda.github.io/recipes/bakta/README.html
-.. |DOI| image:: https://zenodo.org/badge/DOI/10.5281/zenodo..svg
-   :target: https://doi.org/10.5281/zenodo.
+.. |DOI| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.4247252.svg
+   :target: https://doi.org/10.5281/zenodo.4247252
 
