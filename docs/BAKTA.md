@@ -1,4 +1,4 @@
-# Bakta CLI Documentation
+# Bakta CLI
 
 ## Contents
 
@@ -63,7 +63,7 @@ Bacta requires the following 3rd party executables which must be installed & exe
 - PILER-CR (1.06) <https://doi.org/10.1186/1471-2105-8-18> <http://www.drive5.com/pilercr>
 - Prodigal (2.6.3) <https://dx.doi.org/10.1186%2F1471-2105-11-119> <https://github.com/hyattpd/Prodigal>
 - Hmmer (3.3.1) <https://doi.org/10.1093/nar/gkt263> <http://hmmer.org>
-- Diamond (2.0.6) <https://doi.org/10.1038/nmeth.3176> <https://github.com/bbuchfink/diamond>
+- Diamond (2.0.11) <https://doi.org/10.1038/nmeth.3176> <https://github.com/bbuchfink/diamond>
 - Blast+ (2.7.1) <https://www.ncbi.nlm.nih.gov/pubmed/2231712> <https://blast.ncbi.nlm.nih.gov>
 - AMRFinderPlus (3.10.1) <https://github.com/ncbi/amr>
 
@@ -433,7 +433,7 @@ Most genomes annotated with Bakta should be ready-to-submid to INSDC member data
 
 ```bash
 # annotate your genome in `--compliant` mode:
-$ bakta --db <db-path> -v --genus Escherichia --species "coli O157:H7" --strain Sakai --complete --compliant --locus-tag ESAKAI test/data/GCF_000008865.2.fna.gz
+$ bakta --compliant --db <db-path> -v --genus Escherichia --species "coli O157:H7" --strain Sakai --complete --locus-tag ESAKAI test/data/GCF_000008865.2.fna.gz
 ```
 
 ### GenBank
