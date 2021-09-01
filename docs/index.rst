@@ -20,6 +20,12 @@ This documentations contains useful information how to use and install Bakta and
    :hidden:
    
    REST-API documentation <REST-API>
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   
+   WebUI documentation <WEBUI>
    
    
 Features
@@ -55,20 +61,17 @@ A manuscript is in preparation. To temporarily cite our work, please transitiona
 Bakta is standing on the shoulder of giants taking advantage of many publicly available databases. If you find any of those used within Bakta useful, please credit these primary sources, as well:
 
 
-* UniProt: https://doi.org/10.1093/nar/gky1049
-* RefSeq: https://doi.org/10.1093/nar/gkx1068
-* Rfam: https://doi.org/10.1002/cpbi.51
-* AMRFinder: https://doi.org/10.1128/AAC.00483-19
-* ISFinder: https://doi.org/10.1093/nar/gkj014
-* AntiFam: https://doi.org/10.1093/database/bas003
-* Mob-suite: https://doi.org/10.1099/mgen.0.000206
-* DoriC: https://doi.org/10.1093/nar/gky1014
-* COG: https://doi.org/10.1093/bib/bbx117
-* VFDB: https://doi.org/10.1093/nar/gky1080
+- UniProt: https://doi.org/10.1093/nar/gky1049
+- RefSeq: https://doi.org/10.1093/nar/gkx1068
+- Rfam: https://doi.org/10.1002/cpbi.51
+- AMRFinder: https://doi.org/10.1128/AAC.00483-19
+- ISFinder: https://doi.org/10.1093/nar/gkj014
+- AntiFam: https://doi.org/10.1093/database/bas003
+- Mob-suite: https://doi.org/10.1099/mgen.0.000206
+- DoriC: https://doi.org/10.1093/nar/gky1014
+- COG: https://doi.org/10.1093/bib/bbx117
+- VFDB: https://doi.org/10.1093/nar/gky1080
 
-
-* :ref:`search`
---------------
 
 .. |License: GPL v3| image:: https://img.shields.io/badge/License-GPL%20v3-brightgreen.svg
    :target: https://github.com/oschwengers/bakta/blob/master/LICENSE
