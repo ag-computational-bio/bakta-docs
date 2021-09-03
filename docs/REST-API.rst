@@ -127,7 +127,7 @@ Expected request body::
      "job": {
        "secret": "string",
        "jobID": "string"
-     },.. _apiusage:
+     },
      "config": {
        "hasProdigal": true,
        "hasReplicons": true,
