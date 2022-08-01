@@ -9,6 +9,7 @@
 - [Annotation Workflow](#annotation-workflow)
 - [Database](#database)
 - [Genome Submission](#genome-submission)
+- [Protein bulk annotation](#protein-bulk-annotation)
 - [FAQ](#faq)
 - [Issues & Feature Requests](#issues-and-feature-requests)
 
@@ -57,23 +58,16 @@ $ python3 -m pip install --user bakta
 
 Bacta requires the following 3rd party executables which must be installed & executable:
 
-- tRNAscan-SE (2.0.6) <https://doi.org/10.1101/614032> <http://lowelab.ucsc.edu/tRNAscan-SE>
+- tRNAscan-SE (2.0.8) <https://doi.org/10.1101/614032> <http://lowelab.ucsc.edu/tRNAscan-SE>
 - Aragorn (1.2.38) <http://dx.doi.org/10.1093/nar/gkh152> <http://130.235.244.92/ARAGORN>
-- INFERNAL (1.1.2) <https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtt509> <http://eddylab.org/infernal>
+- INFERNAL (1.1.4) <https://dx.doi.org/10.1093%2Fbioinformatics%2Fbtt509> <http://eddylab.org/infernal>
 - PILER-CR (1.06) <https://doi.org/10.1186/1471-2105-8-18> <http://www.drive5.com/pilercr>
 - Prodigal (2.6.3) <https://dx.doi.org/10.1186%2F1471-2105-11-119> <https://github.com/hyattpd/Prodigal>
-- Hmmer (3.3.1) <https://doi.org/10.1093/nar/gkt263> <http://hmmer.org>
-- Diamond (2.0.11) <https://doi.org/10.1038/nmeth.3176> <https://github.com/bbuchfink/diamond>
-- Blast+ (2.7.1) <https://www.ncbi.nlm.nih.gov/pubmed/2231712> <https://blast.ncbi.nlm.nih.gov>
-- AMRFinderPlus (3.10.1) <https://github.com/ncbi/amr>
-
-On Ubuntu/Debian/Mint you can install these via:
-
-```bash
-$ sudo apt install trnascan-se aragorn infernal pilercr prodigal hmmer diamond-aligner ncbi-blast+
-```
-
-Tested with Ubuntu 20.04 - some older distributions might provide outdated versions, *e.g.* trnascan-se in Ubuntu 18.04. In these cases dependencies must be installed manually.
+- Hmmer (3.3.2) <https://doi.org/10.1093/nar/gkt263> <http://hmmer.org>
+- Diamond (2.0.14) <https://doi.org/10.1038/nmeth.3176> <https://github.com/bbuchfink/diamond>
+- Blast+ (2.12.0) <https://www.ncbi.nlm.nih.gov/pubmed/2231712> <https://blast.ncbi.nlm.nih.gov>
+- AMRFinderPlus (3.10.23) <https://github.com/ncbi/amr>
+- DeepSig (1.2.5) <https://doi.org/10.1093/bioinformatics/btx818>
 
 ### Database download
 
@@ -149,7 +143,7 @@ Bakta accepts bacterial genomes and plasmids (complete / draft assemblies) in (z
 
 Replicon meta data table:
 
-To fine-tune the very details of each sequence in the input fasta file, Bakta accepts a replicon meta data table provided in `csv`/`tsv` file format: `--replicons <file.tsv>`. Thus, complete replicons within partially completed draft assemblies can be marked & handled as such, *e.g.* detection & annotation of features spanning sequence edges.
+To fine-tune the very details of each sequence in the input fasta file, Bakta accepts a replicon meta data table provided in `csv` or `tsv` file format: `--replicons <file.tsv>`. Thus, complete replicons within partially completed draft assemblies can be marked & handled as such, *e.g.* detection & annotation of features spanning sequence edges.
 
 Table format:
 
@@ -183,11 +177,38 @@ NODE_3 | p2 | `p`  |  `c` | `pXYZ2`
 NODE_4 | special-contig-name-xyz |  `-` | -
 NODE_5 | `` |  `-` | -
 
+#### User provided protein sequences
+
+Bakta accepts user provided trusted protein sequences via `--proteins` in either GenBank (CDS features) or Fasta format. Using the Fasta format, each reference sequence can be provided in a short or long format:
+
+```bash
+# short:
+>id gene~~~product~~~dbxrefs
+MAQ...
+
+# long:
+>id min_identity~~~min_query_cov~~~min_subject_cov~~~gene~~~product~~~dbxrefs
+MAQ...
+```
+
+Allowed values:
+
+field  |  value(s)  |  example
+----|----------------|----------------
+min_identity | `int`, `float` | 80, 90.3
+min_query_cov | `int`, `float` | 80, 90.3
+min_subject_cov | `int`, `float` | 80, 90.3
+gene | `<empty>`, `string` | msp
+product | `string` | my special protein
+dbxrefs | `<empty>`, `db:id`, `,` separated list  | `VFDB:VF0511`
+
+Protein sequences provided in short Fasta or GenBank format are searched with default thresholds of 90%, 80% and 80% for minimal identity, query and subject coverage, respectively.
+
 ### Output
 
 Annotation results are provided in standard bioinformatics file formats:
 
-- `<prefix>.tsv`: annotations as simple human readble tab separated values
+- `<prefix>.tsv`: annotations as simple human readble TSV
 - `<prefix>.gff3`: annotations & sequences in GFF3 format
 - `<prefix>.gbff`: annotations & sequences in (multi) GenBank format
 - `<prefix>.embl`: annotations & sequences in (multi) EMBL format
@@ -196,6 +217,7 @@ Annotation results are provided in standard bioinformatics file formats:
 - `<prefix>.faa`: CDS/sORF amino acid sequences as FASTA
 - `<prefix>.hypotheticals.tsv`: further information on hypothetical protein CDS as simple human readble tab separated values
 - `<prefix>.hypotheticals.faa`: hypothetical protein CDS amino acid sequences as FASTA
+- `<prefix>.txt`: summary as TXT
 
 The `<prefix>` can be set via `--prefix <prefix>`. If no prefix is set, Bakta uses the input file prefix.
 
@@ -249,12 +271,16 @@ Exemplary annotation result files for several genomes (mostly ESKAPE species) ar
 Usage:
 
 ```bash
-usage: bakta [--db DB] [--min-contig-length MIN_CONTIG_LENGTH] [--prefix PREFIX] [--output OUTPUT] [--genus GENUS] [--species SPECIES] [--strain STRAIN] [--plasmid PLASMID] [--complete] [--prodigal-tf PRODIGAL_TF] [--translation-table {11,4}] [--gram {+,-,?}] [--locus LOCUS]
-             [--locus-tag LOCUS_TAG] [--keep-contig-headers] [--replicons REPLICONS] [--compliant] [--skip-trna] [--skip-tmrna] [--skip-rrna] [--skip-ncrna] [--skip-ncrna-region] [--skip-crispr] [--skip-cds] [--skip-sorf] [--skip-gap] [--skip-ori] [--help] [--verbose] [--threads THREADS]
-             [--tmp-dir TMP_DIR] [--version]
+usage: bakta [--db DB] [--min-contig-length MIN_CONTIG_LENGTH] [--prefix PREFIX] [--output OUTPUT]
+             [--genus GENUS] [--species SPECIES] [--strain STRAIN] [--plasmid PLASMID]
+             [--complete] [--prodigal-tf PRODIGAL_TF] [--translation-table {11,4}] [--gram {+,-,?}] [--locus LOCUS]
+             [--locus-tag LOCUS_TAG] [--keep-contig-headers] [--replicons REPLICONS] [--compliant] [--proteins PROTEINS]
+             [--skip-trna] [--skip-tmrna] [--skip-rrna] [--skip-ncrna] [--skip-ncrna-region]
+             [--skip-crispr] [--skip-cds] [--skip-sorf] [--skip-gap] [--skip-ori]
+             [--help] [--verbose] [--threads THREADS] [--tmp-dir TMP_DIR] [--version]
              <genome>
 
-Rapid & standardized annotation of bacterial genomes & plasmids.
+Rapid & standardized annotation of bacterial genomes, MAGs & plasmids
 
 positional arguments:
   <genome>              Genome sequences in (zipped) fasta format
@@ -280,7 +306,7 @@ Annotation:
                         Path to existing Prodigal training file to use for CDS prediction
   --translation-table {11,4}
                         Translation table: 11/4 (default = 11)
-  --gram {+,-,?}        Gram type: +/-/? (default = '?')
+  --gram {+,-,?}        Gram type for signal peptide predictions: +/-/? (default = '?')
   --locus LOCUS         Locus prefix (default = 'contig')
   --locus-tag LOCUS_TAG
                         Locus tag prefix (default = autogenerated)
@@ -289,6 +315,7 @@ Annotation:
   --replicons REPLICONS, -r REPLICONS
                         Replicon information table (tsv/csv)
   --compliant           Force Genbank/ENA/DDJB compliance
+  --proteins PROTEINS   Fasta file of trusted protein sequences for CDS annotation
 
 Workflow:
   --skip-trna           Skip tRNA detection & annotation
@@ -298,6 +325,7 @@ Workflow:
   --skip-ncrna-region   Skip ncRNA region detection & annotation
   --skip-crispr         Skip CRISPR array detection & annotation
   --skip-cds            Skip CDS detection & annotation
+  --skip-pseudo         Skip pseudogene detection & annotation
   --skip-sorf           Skip sORF detection & annotation
   --skip-gap            Skip gap detection & annotation
   --skip-ori            Skip oriC/oriT detection & annotation
@@ -308,7 +336,7 @@ General:
   --threads THREADS, -t THREADS
                         Number of threads to use (default = number of available CPUs)
   --tmp-dir TMP_DIR     Location for temporary files (default = system dependent auto detection)
-  --version             show programs version number and exit
+  --version             show program's version number and exit
 ```
 
 ## Annotation Workflow
@@ -354,14 +382,17 @@ Conceptual terms:
 **CDS**:
 
 1. Prediction via Prodigal respecting sequences' completeness (distinct prediction for complete replicons and uncompleted contigs)
-2. discard spurious CDS via AntiFam
-3. Detection of UPSs via MD5 digests and lookup of related IPS and PCS
-4. Sequence alignments of remainder via Diamond vs. PSC (query/subject coverage=0.8, identity=0.5)
-5. Assign protein sequences to UniRef90 or UniRef50 clusters if alignment hits meet an identity larger than 0.9 or 0.5, respectively
-6. Execution of expert systems:
+2. Discard spurious CDS via AntiFam
+3. Detect translational exceptions (selenocysteines)
+4. Detection of UPSs via MD5 digests and lookup of related IPS and PCS
+5. Sequence alignments of remainder via Diamond vs. PSC (query/subject coverage=0.8, identity=0.5)
+6. Assignment to UniRef90 or UniRef50 clusters if alignment hits achieve identities larger than 0.9 or 0.5, respectively
+7. Execution of expert systems:
   - AMR: AMRFinderPlus
-  - Alignments: NCBI BlastRules, VFDB
-7. Combination of available IPS, PSC, PSCC and expert system information favouring more specific annotations and avoiding redundancy
+  - Expert proteins: NCBI BlastRules, VFDB
+  - User proteins (optionally via `--proteins <Fasta/GenBank>`)
+8. Prediction of signal peptides (optionally via `--gram <+/->`)
+9. Combination of IPS, PSC, PSCC and expert system information favouring more specific annotations and avoiding redundancy
 
 CDS without IPS or PSC hits as well as those without gene symbols or product descriptions different from `hypothetical` will be marked as `hypothetical`.
 
@@ -378,6 +409,7 @@ Such hypothetical CDS are further analyzed:
 4. Detection of UPS via MD5 hashes and lookup of related IPS
 5. Sequence alignments of remainder via Diamond vs. an sORF subset of PSCs (coverage=0.9, identity=0.9)
 6. Exclude sORF without sufficient annotation information
+7. Prediction of signal peptides (optionally via `--gram <+/->`)
 
 sORF not identified via IPS or PSC will be discarded. Additionally, all sORF without gene symbols or product descriptions different from `hypothetical` will be discarded.
 Due due to uncertain nature of sORF prediction, only those identified via IPS / PSC hits exhibiting proper gene symbols or product descriptions different from `hypothetical` will be included in the final annotation.
@@ -392,19 +424,20 @@ Due due to uncertain nature of sORF prediction, only those identified via IPS / 
 The Bakta database comprises a set of AA & DNA sequence databases as well as HMM & covariance models.
 At its core Bakta utilizes a compact read-only SQLite db storing protein sequence digests, lengths, pre-assigned annotations and dbxrefs of UPS, IPS and PSC from:
 
-- **UPS**: UniParc / UniProtKB (214,847,897)
-- **IPS**: UniProt UniRef100 (199,630,327)
-- **PSC**: UniProt UniRef90 (90,580,050)
-- **PSCC**: UniProt UniRef50 (12,127,845)
+- **UPS**: UniParc / UniProtKB (213,429,161)
+- **IPS**: UniProt UniRef100 (198,494,206)
+- **PSC**: UniProt UniRef90 (91,455,850)
+- **PSCC**: UniProt UniRef50 (12,323,024)
 
 This allows the exact protein sequences identification via MD5 digests & sequence lengths as well as the rapid subsequent lookup of related information. Protein sequence digests are checked for hash collisions while the db creation process.
 IPS & PSC have been comprehensively pre-annotated integrating annotations & database *dbxrefs* from:
 
-- NCBI nonredundant proteins (IPS: 150,463,165)
-- NCBI COG db (PSC: 3,353,131)
-- SwissProt EC/GO terms (PSC: 335,256)
-- NCBI AMRFinderPlus (IPS: 6,255, PSC: 43,413)
-- ISFinder db (IPS: 27,841, PSC: 10,161)
+- NCBI nonredundant proteins (IPS: 153,166,049)
+- NCBI COG db (PSC: 3,383,871)
+- SwissProt EC/GO terms (PSC: 335,068)
+- NCBI AMRFinderPlus (IPS: 6,534, PSC: 48,931)
+- ISFinder db (IPS: 45,820, PSC: 10,351)
+- Pfam families (PSC: 3,917,555)
 
 To provide high quality annotations for distinct protein sequences of high importance (AMR, VF, *etc*) which cannot sufficiently be covered by the IPS/PSC approach, Bakta provides additional expert systems. For instance, AMR genes, are annotated via NCBI's AMRFinderPlus.
 An expandable alignment-based expert system supports the incorporation of high quality annotations from multiple sources. This currenlty comprises NCBI's BlastRules as well as VFDB and will be complemented with more expert annotation sources over time. Internally, this expert system is based on a Diamond DB comprising the following information in a standardized format:
@@ -421,11 +454,16 @@ An expandable alignment-based expert system supports the incorporation of high q
 Rfam covariance models:
 
 - ncRNA: 798
-- ncRNA cis-regulatory regions: 267
+- ncRNA cis-regulatory regions: 270
+
+ori sequences:
+
+- oriC/V: 10,878
+- oriT: 502
 
 To provide FAIR annotations, the database releases are SemVer versioned (w/o patch level), *i.e.* `<major>.<minor>`. For each version we provide a comprehensive log file tracking all imported sequences as well as annotations thereof. The db schema is represented by the `<major>` digit and automatically checked at runtime by Bakta in order to ensure compatibility. Content updates are tracked by the `<minor>` digit.
 
-All database releases (latest 3.0, 28 Gb zipped, 53 Gb unzipped) are hosted at Zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4247252.svg)](https://doi.org/10.5281/zenodo.4247252)
+All database releases (latest 3.1, 28 Gb zipped, 53 Gb unzipped) are hosted at Zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5961398.svg)](https://doi.org/10.5281/zenodo.5961398)
 
 ## Genome Submission
 
@@ -433,7 +471,7 @@ Most genomes annotated with Bakta should be ready-to-submid to INSDC member data
 
 ```bash
 # annotate your genome in `--compliant` mode:
-$ bakta --compliant --db <db-path> -v --genus Escherichia --species "coli O157:H7" --strain Sakai --complete --locus-tag ESAKAI test/data/GCF_000008865.2.fna.gz
+$ bakta --db <db-path> -v --genus Escherichia --species "coli O157:H7" --strain Sakai --complete --compliant --locus-tag ESAKAI test/data/GCF_000008865.2.fna.gz
 ```
 
 ### GenBank
@@ -490,15 +528,68 @@ contig_2    contig_2    circular-plasmid
 contig_3    contig_3    circular-plasmid
 ```
 
+## Protein bulk annotation
+
+For the direct bulk annotation of protein sequences aside from the genome, Bakta provides a dedicated CLI entry point `bakta_proteins`:
+
+Examples:
+
+```bash
+$ bakta_proteins --db <db-path> input.fasta
+
+$ bakta_proteins --db <db-path> --prefix test --output test --proteins special.faa --threads 8 input.fasta
+```
+
+### Output
+
+Annotation results are provided in standard bioinformatics file formats:
+
+- `<prefix>.tsv`: annotations as simple human readble TSV
+- `<prefix>.faa`: protein sequences as FASTA
+- `<prefix>.hypotheticals.tsv`: further information on hypothetical proteins as simple human readble tab separated values
+
+The `<prefix>` can be set via `--prefix <prefix>`. If no prefix is set, Bakta uses the input file prefix.
+
+### Usage
+
+```bash
+usage: bakta_proteins [--db DB] [--output OUTPUT] [--prefix PREFIX] [--proteins PROTEINS] [--help] [--threads THREADS] [--tmp-dir TMP_DIR] [--version] <input>
+
+Rapid & standardized annotation of bacterial genomes, MAGs & plasmids
+
+positional arguments:
+  <input>               Protein sequences in (zipped) fasta format
+
+Input / Output:
+  --db DB, -d DB        Database path (default = <bakta_path>/db). Can also be provided as BAKTA_DB environment variable.
+  --output OUTPUT, -o OUTPUT
+                        Output directory (default = current working directory)
+  --prefix PREFIX, -p PREFIX
+                        Prefix for output files
+
+Annotation:
+  --proteins PROTEINS   Fasta file of trusted protein sequences for annotation
+
+Runtime & auxiliary options:
+  --help, -h            Show this help message and exit
+  --threads THREADS, -t THREADS
+                        Number of threads to use (default = number of available CPUs)
+  --tmp-dir TMP_DIR     Location for temporary files (default = system dependent auto detection)
+  --version, -V         show program's version number and exit
+```
+
 ## FAQ
 
-* __AMRFinder fails__
+- __AMRFinder fails__
 If AMRFinder constantly crashes even on fresh setups and Bakta's database was downloaded manually, then AMRFinder needs to setup its own internal database. This is required only once: `amrfinder_update --force_update --database <bakta-db>/amrfinderplus-db`. You could also try Bakta's internal database download logic automatically taking care of this: `bakta_db download --output <bakta-db>`
 
-* __Nice, but I'm mising XYZ...__
+- __DeepSig not found in Conda environment__
+For the prediction of signal predictions, Bakta uses DeepSig that is currently not available for MacOS. Therefore, we decided to exclude DeepSig from Bakta's default Conda dependencies because otherwise it would not be installable on MacOS systems. On Linux systems it can be installed via `conda install -c conda-forge -c bioconda python=3.8 deepsig`.
+
+- __Nice, but I'm mising XYZ...__
 Bakta is quite new and we're keen to constantly improve it and further expand its feature set. In case there's anything missing, please do not hesitate to open an issue and ask for it!
 
-* __Bakta is running too long without CPU load... why?__
+- __Bakta is running too long without CPU load... why?__
 Bakta takes advantage of an SQLite DB which results in high storage IO loads. If this DB is stored on a remote / network volume, the lookup of IPS/PSC annotations might take a long time. In these cases, please, consider moving the DB to a local volume or hard drive.
 
 ## Issues and Feature Requests
