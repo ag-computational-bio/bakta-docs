@@ -59,7 +59,7 @@ We provide 2 types: `full` and `light`. To get best annotation results and to us
 
 List available DB versions (available as either `full` or `light`):
 
-```bash
+```shell
 bakta_db list
 ...
 ```
