@@ -19,9 +19,9 @@ The menu contains multiple subsections:
 - **CLI**: Shortcut to the CLI repo and documentation 
 - **About**: Legal information and terms of use, including a fair use policy.
 
-![logo](./images/bakta_overview.png "Bakta Overview")
+![overview](./images/bakta_overview.png "Bakta Overview")
 
-## Monitoring Jobs
+<!-- ## Monitoring Jobs
 
 Submitted jobs are monitored automatically in the `Jobs` tab.
 
@@ -54,4 +54,4 @@ Visualized results contain three sections:
 ![results](./images/results.png "Bakta Results")
 
 ![annotation](./images/annotation.png "Bakta Results List of Annotations")
-
+ -->

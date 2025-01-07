@@ -20,4 +20,4 @@
 - [Overview](./web/overview.md)
 - [Submitting a job](./web/submitting.md)
 - [Monitoring progress](./web/monitoring.md)
-- [Retrieving and visualizing results](./web/results.md)
+- [Visualizing results](./web/results.md)
