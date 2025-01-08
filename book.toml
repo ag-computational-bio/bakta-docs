@@ -1,0 +1,6 @@
+[book]
+authors = ["Sebastian Beyvers", "Oliver Schwengers"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Bakta Documentation"
