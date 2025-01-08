@@ -24,7 +24,7 @@ This documentation contains three major sections:
 
 - [**Bakta CLI**](./cli/index.md): This contains the documentation how to use Bakta from the Command Line.
 - [**Bakta Web**](./web/index.md): A quick guide for our free to use web annotation and visualization service at https://bakta.computational.bio
-- [**Bakta API**](./api.md): Documentation and examples how to use the API that powers the web service
+- [**Bakta API**](./api/index.md): Documentation and examples how to use the API that powers the web service
 
 ## Features
 
