@@ -1,6 +1,6 @@
 # Logs
 
-Start a job that has been initialized before. Please make sure that all files have been successfully uploaded before issuing this request.
+This API endpoint can be used to retrieve STDOUT / STDERR logs from both running and already finished jobs. This is intended to be used to get a better understanding about the annotation process and to make it easier to debug errors that might come from invalid user input.
 
 **Method**: GET
 
