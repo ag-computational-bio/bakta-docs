@@ -55,6 +55,8 @@ curl -X 'POST' \
 }'
 ``` 
 
+Note: These PUT requests require the `@` symbol before the path to the file. This signalizes cURL to use the content of the file and not the filename as input / body of your request.
+
 Put sequence data (required):
 
 ```bash

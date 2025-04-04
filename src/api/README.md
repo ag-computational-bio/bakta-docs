@@ -22,6 +22,8 @@ The overall procedure for jobs should look like this:
 
 **Init** -> **Put Data** -> **Start** -> **List** (wait till job succeeeds) -> **Query Results**
 
+A full roundtrip example can be found [here](./full.md).
+
 
 ## Bugs and Issues
 

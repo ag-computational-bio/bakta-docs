@@ -28,3 +28,4 @@
     - [Result](./api/result.md)
     - [Delete](./api/delete.md)
     - [Version](./api/version.md)
+    - [Full example](./api/full.md)
